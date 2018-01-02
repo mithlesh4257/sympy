@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 from __future__ import print_function, division
 
 from sympy.printing.defaults import DefaultPrinting
@@ -891,6 +892,7 @@ def coset_enumeration_r(fp_grp, Y, max_cosets=None, draft=None,
     # Mathematics of Computation, Vol. 27, No. 123. (Jul., 1973), pp. 463-490
     # from 1973chwd.pdf
     # Table 1. Ex. 1
+    
     >>> F, r, s, t = free_group("r, s, t")
     >>> E1 = FpGroup(F, [t**-1*r*t*r**-2, r**-1*s*r*s**-2, s**-1*t*s*t**-2])
     >>> C = coset_enumeration_r(E1, [r])
@@ -924,6 +926,7 @@ def coset_enumeration_r(fp_grp, Y, max_cosets=None, draft=None,
 
     """
     # 1. Initialize a coset table C for < X|R >
+    
     C = CosetTable(fp_grp, Y, max_cosets=max_cosets)
     if draft:
         C.table = draft.table[:]
