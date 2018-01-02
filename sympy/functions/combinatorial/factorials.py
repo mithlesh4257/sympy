@@ -36,48 +36,35 @@ class factorial(CombinatorialFunction):
     """Implementation of factorial function over nonnegative integers.
        By convention (consistent with the gamma function and the binomial
        coefficients), factorial of a negative integer is complex infinity.
-
        The factorial is very important in combinatorics where it gives
        the number of ways in which `n` objects can be permuted. It also
        arises in calculus, probability, number theory, etc.
-
        There is strict relation of factorial with gamma function. In
        fact n! = gamma(n+1) for nonnegative integers. Rewrite of this
        kind is very useful in case of combinatorial simplification.
-
        Computation of the factorial is done using two algorithms. For
        small arguments a precomputed look up table is used. However for bigger
        input algorithm Prime-Swing is used. It is the fastest algorithm
        known and computes n! via prime factorization of special class
        of numbers, called here the 'Swing Numbers'.
-
        Examples
        ========
-
        >>> from sympy import Symbol, factorial, S
        >>> n = Symbol('n', integer=True)
-
        >>> factorial(0)
        1
-
        >>> factorial(7)
        5040
-
        >>> factorial(-2)
        zoo
-
        >>> factorial(n)
        factorial(n)
-
        >>> factorial(2*n)
        factorial(2*n)
-
        >>> factorial(S(1)/2)
        factorial(1/2)
-
        See Also
        ========
-
        factorial2, RisingFactorial, FallingFactorial
     """
 
@@ -233,44 +220,33 @@ class MultiFactorial(CombinatorialFunction):
 class subfactorial(CombinatorialFunction):
     r"""The subfactorial counts the derangements of n items and is
     defined for non-negative integers as::
-
               ,
              |  1                             for n = 0
         !n = {  0                             for n = 1
              |  (n - 1)*(!(n - 1) + !(n - 2)) for n > 1
               `
-
     It can also be written as int(round(n!/exp(1))) but the recursive
     definition with caching is implemented for this function.
-
     An interesting analytic expression is the following [2]_
-
     .. math:: !x = \Gamma(x + 1, -1)/e
-
     which is valid for non-negative integers x. The above formula
     is not very useful incase of non-integers. :math:`\Gamma(x + 1, -1)` is
     single-valued only for integral arguments x, elsewhere on the positive real
     axis it has an infinite number of branches none of which are real.
-
     References
     ==========
-
     .. [1] http://en.wikipedia.org/wiki/Subfactorial
     .. [2] http://mathworld.wolfram.com/Subfactorial.html
-
     Examples
     ========
-
     >>> from sympy import subfactorial
     >>> from sympy.abc import n
     >>> subfactorial(n + 1)
     subfactorial(n + 1)
     >>> subfactorial(5)
     44
-
     See Also
     ========
-
     sympy.functions.combinatorial.factorials.factorial,
     sympy.utilities.iterables.generate_derangements,
     sympy.functions.special.gamma_functions.uppergamma
@@ -318,24 +294,19 @@ class subfactorial(CombinatorialFunction):
 
 class factorial2(CombinatorialFunction):
     """The double factorial n!!, not to be confused with (n!)!
-
     The double factorial is defined for nonnegative integers and for odd
     negative integers as::
-
                ,
               |  n*(n - 2)*(n - 4)* ... * 1    for n positive odd
         n!! = {  n*(n - 2)*(n - 4)* ... * 2    for n positive even
               |  1                             for n = 0
               |  (n+2)!! / (n+2)               for n negative odd
                `
-
     References
     ==========
     .. [1] https://en.wikipedia.org/wiki/Double_factorial
-
     Examples
     ========
-
     >>> from sympy import factorial2, var
     >>> var('n')
     n
@@ -347,10 +318,8 @@ class factorial2(CombinatorialFunction):
     1
     >>> factorial2(-5)
     1/3
-
     See Also
     ========
-
     factorial, RisingFactorial, FallingFactorial
     """
 
@@ -436,22 +405,17 @@ class RisingFactorial(CombinatorialFunction):
     Rising factorial (also called Pochhammer symbol) is a double valued
     function arising in concrete mathematics, hypergeometric functions
     and series expansions. It is defined by:
-
                 rf(x, k) = x * (x + 1) * ... * (x + k - 1)
-
     where 'x' can be arbitrary expression and 'k' is an integer. For
     more information check "Concrete mathematics" by Graham, pp. 66
     or visit http://mathworld.wolfram.com/RisingFactorial.html page.
-
     When x is a Poly instance of degree >= 1 with a single variable,
     rf(x,k) = x(y) * x(y+1) * ... * x(y+k-1), where y is the variable of x.
     This is as described in Peter Paule, "Greatest Factorial Factorization and
     Symbolic Summation", Journal of Symbolic Computation, vol. 20, pp.
     235-268, 1995.
-
     Examples
     ========
-
     >>> from sympy import rf, symbols, factorial, ff, binomial, Poly
     >>> from sympy.abc import x
     >>> n, k = symbols('n k', integer=True)
@@ -463,26 +427,19 @@ class RisingFactorial(CombinatorialFunction):
     True
     >>> rf(Poly(x**3, x), 2)
     Poly(x**6 + 3*x**5 + 3*x**4 + x**3, x, domain='ZZ')
-
     Rewrite
-
     >>> rf(x, k).rewrite(ff)
     FallingFactorial(k + x - 1, k)
     >>> rf(x, k).rewrite(binomial)
     binomial(k + x - 1, k)*factorial(k)
     >>> rf(n, k).rewrite(factorial)
     factorial(k + n - 1)/factorial(n - 1)
-
     See Also
     ========
-
     factorial, factorial2, FallingFactorial
-
     References
     ==========
-
     .. [1] https://en.wikipedia.org/wiki/Pochhammer_symbol
-
     """
 
     @classmethod
@@ -566,19 +523,15 @@ class FallingFactorial(CombinatorialFunction):
     Falling factorial (related to rising factorial) is a double valued
     function arising in concrete mathematics, hypergeometric functions
     and series expansions. It is defined by
-
                 ff(x, k) = x * (x-1) * ... * (x - k+1)
-
     where 'x' can be arbitrary expression and 'k' is an integer. For
     more information check "Concrete mathematics" by Graham, pp. 66
     or visit http://mathworld.wolfram.com/FallingFactorial.html page.
-
     When x is a Poly instance of degree >= 1 with single variable,
     ff(x,k) = x(y) * x(y-1) * ... * x(y-k+1), where y is the variable of x.
     This is as described in Peter Paule, "Greatest Factorial Factorization and
     Symbolic Summation", Journal of Symbolic Computation, vol. 20, pp.
     235-268, 1995.
-
     >>> from sympy import ff, factorial, rf, gamma, polygamma, binomial, symbols, Poly
     >>> from sympy.abc import x, k
     >>> n, m = symbols('n m', integer=True)
@@ -592,9 +545,7 @@ class FallingFactorial(CombinatorialFunction):
     Poly(x**4 - 2*x**3 + x**2, x, domain='ZZ')
     >>> ff(n, n)
     factorial(n)
-
     Rewrite
-
     >>> ff(x, k).rewrite(gamma)
     (-1)**k*gamma(k - x)/gamma(-x)
     >>> ff(x, k).rewrite(rf)
@@ -603,17 +554,12 @@ class FallingFactorial(CombinatorialFunction):
     binomial(x, m)*factorial(m)
     >>> ff(n, m).rewrite(factorial)
     factorial(n)/factorial(-m + n)
-
     See Also
     ========
-
     factorial, factorial2, RisingFactorial
-
     References
     ==========
-
     .. [1] http://mathworld.wolfram.com/FallingFactorial.html
-
     """
 
     @classmethod
@@ -703,41 +649,30 @@ ff = FallingFactorial
 class binomial(CombinatorialFunction):
     """Implementation of the binomial coefficient. It can be defined
     in two ways depending on its desired interpretation:
-
         C(n,k) = n!/(k!(n-k)!)   or   C(n, k) = ff(n, k)/k!
-
     First, in a strict combinatorial sense it defines the
     number of ways we can choose 'k' elements from a set of
     'n' elements. In this case both arguments are nonnegative
     integers and binomial is computed using an efficient
     algorithm based on prime factorization.
-
     The other definition is generalization for arbitrary 'n',
     however 'k' must also be nonnegative. This case is very
     useful when evaluating summations.
-
     For the sake of convenience for negative 'k' this function
     will return zero no matter what valued is the other argument.
-
     To expand the binomial when n is a symbol, use either
     expand_func() or expand(func=True). The former will keep the
     polynomial in factored form while the latter will expand the
     polynomial itself. See examples for details.
-
     Examples
     ========
-
     >>> from sympy import Symbol, Rational, binomial, expand_func
     >>> n = Symbol('n', integer=True, positive=True)
-
     >>> binomial(15, 8)
     6435
-
     >>> binomial(n, -1)
     0
-
     Rows of Pascal's triangle can be generated with the binomial function:
-
     >>> for N in range(8):
     ...     print([ binomial(N, i) for i in range(N + 1)])
     ...
@@ -749,27 +684,20 @@ class binomial(CombinatorialFunction):
     [1, 5, 10, 10, 5, 1]
     [1, 6, 15, 20, 15, 6, 1]
     [1, 7, 21, 35, 35, 21, 7, 1]
-
     As can a given diagonal, e.g. the 4th diagonal:
-
     >>> N = -4
     >>> [ binomial(N, i) for i in range(1 - N)]
     [1, -4, 10, -20, 35]
-
     >>> binomial(Rational(5, 4), 3)
     -5/128
     >>> binomial(Rational(-5, 4), 3)
     -195/128
-
     >>> binomial(n, 3)
     binomial(n, 3)
-
     >>> binomial(n, 3).expand(func=True)
     n**3/6 - n**2/2 + n/3
-
     >>> expand_func(binomial(n, 3))
     n*(n - 2)*(n - 1)/6
-
     """
 
     def fdiff(self, argindex=1):
@@ -907,3 +835,8 @@ class binomial(CombinatorialFunction):
             return True
         elif k.is_integer is False:
             return False
+
+    def _eval_is_nonnegative(self):
+        if self.args[0].is_integer and self.args[1].is_integer:
+            if self.args[0].is_nonnegative and self.args[1].is_nonnegative:
+                return True
